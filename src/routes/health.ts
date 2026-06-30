@@ -5,8 +5,31 @@ const router = Router();
  
 /** 
  * GET /health 
- * Verifica el estado del servidor y la conexión a la base de datos. 
- * Útil para saber si la app está corriendo correctamente. 
+ * @openapi
+ * /health:
+ *   get:
+ *     tags:
+ *       - Health
+ *     summary: Verifica el estado del servidor y la conexión a BD
+ *     responses:
+ *       200:
+ *         description: Servidor y BD funcionando
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: ok
+ *                 message:
+ *                   type: string
+ *                 server:
+ *                   type: object
+ *                 database:
+ *                   type: object
+ *       500:
+ *         description: Error de conexión con la BD
  */ 
 router.get('/', async (req: Request, res: Response) => { 
   try { 

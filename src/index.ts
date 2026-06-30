@@ -1,10 +1,14 @@
 import express, { Application, Request, Response } from 'express'; 
 import cors from 'cors'; 
 import dotenv from 'dotenv'; 
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger';
 
- 
 // Importar rutas 
 import healthRouter from './routes/health'; 
+import routesUsers from './routes/users';
+import routesProjects from './routes/projects';
+ 
  
 // Cargar variables de entorno (SIEMPRE primero) 
 dotenv.config(); 
@@ -33,6 +37,11 @@ app.use(express.urlencoded({ extended: true }));
  
 // Ruta de health check 
 app.use('/health', healthRouter); 
+
+app.use('/api/users', routesUsers);
+
+app.use('/api/projects', routesProjects);
+
  
 // Ruta raíz informativa 
 app.get('/', (req: Request, res: Response) => { 
@@ -48,6 +57,9 @@ app.get('/', (req: Request, res: Response) => {
   }); 
 }); 
  
+// Documentación Swagger 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // ──────────────────────────────────────────────────── 
 // MANEJO DE RUTAS NO ENCONTRADAS (404) 
 // ──────────────────────────────────────────────────── 
@@ -65,7 +77,8 @@ app.use((req: Request, res: Response) => {
 app.listen(PORT, () => { 
   console.log('\n🚀 TaskFlow API iniciada'); 
   console.log(`📡 Puerto: ${PORT}`); 
-  console.log(`🔍 Health: http://localhost:${PORT}/health`); 
+  console.log(`🔍 Health: http://localhost:${PORT}/health`);
+  console.log(`📖 Docs:  http://localhost:${PORT}/api-docs`); 
   console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}\n`); 
 }); 
  

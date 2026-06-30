@@ -1,18 +1,18 @@
 import { Router } from 'express'; 
-import { usersController } from '../controllers/users.controller'; 
-
+import { projectsController } from '../controllers/projects.controller'; 
+  
 const router = Router(); 
 
 /**
  * @openapi
- * /api/users:
+ * /api/projects:
  *   get:
  *     tags:
- *       - Usuarios
- *     summary: Lista todos los usuarios
+ *       - Proyectos
+ *     summary: Lista todos los proyectos
  *     responses:
  *       200:
- *         description: Lista de usuarios
+ *         description: Lista de proyectos
  *         content:
  *           application/json:
  *             schema:
@@ -21,126 +21,124 @@ const router = Router();
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/UserPublic'
+ *                     $ref: '#/components/schemas/ProjectPublic'
  *                 count:
  *                   type: integer
  */
-router.get('/',       usersController.getAll);    // GET  /api/users 
+router.get('/',       projectsController.getAll);
 
 /**
  * @openapi
- * /api/users/{id}:
+ * /api/projects/{id}:
  *   get:
  *     tags:
- *       - Usuarios
- *     summary: Obtiene un usuario por ID
+ *       - Proyectos
+ *     summary: Obtiene un proyecto por ID
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: ID del usuario
+ *         description: ID del proyecto
  *     responses:
  *       200:
- *         description: Datos del usuario
+ *         description: Datos del proyecto
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 data:
- *                   $ref: '#/components/schemas/UserPublic'
+ *                   $ref: '#/components/schemas/ProjectPublic'
  *       404:
- *         description: Usuario no encontrado
+ *         description: Proyecto no encontrado
  */
-router.get('/:id',    usersController.getById);   // GET  /api/users/:id 
+router.get('/:id',    projectsController.getById);
 
 /**
  * @openapi
- * /api/users:
+ * /api/projects:
  *   post:
  *     tags:
- *       - Usuarios
- *     summary: Crea un nuevo usuario
+ *       - Proyectos
+ *     summary: Crea un nuevo proyecto
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateUserDto'
+ *             $ref: '#/components/schemas/CreateProjectDto'
  *     responses:
  *       201:
- *         description: Usuario creado
+ *         description: Proyecto creado
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 data:
- *                   $ref: '#/components/schemas/UserPublic'
+ *                   $ref: '#/components/schemas/ProjectPublic'
  *       400:
  *         description: Campos requeridos faltantes
- *       409:
- *         description: El email ya está registrado
  */
-router.post('/',      usersController.create);    // POST /api/users 
+router.post('/',      projectsController.create);
 
 /**
  * @openapi
- * /api/users/{id}:
+ * /api/projects/{id}:
  *   put:
  *     tags:
- *       - Usuarios
- *     summary: Actualiza un usuario
+ *       - Proyectos
+ *     summary: Actualiza un proyecto
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: ID del usuario
+ *         description: ID del proyecto
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UpdateUserDto'
+ *             $ref: '#/components/schemas/UpdateProjectDto'
  *     responses:
  *       200:
- *         description: Usuario actualizado
+ *         description: Proyecto actualizado
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 data:
- *                   $ref: '#/components/schemas/UserPublic'
+ *                   $ref: '#/components/schemas/ProjectPublic'
  *       404:
- *         description: Usuario no encontrado
+ *         description: Proyecto no encontrado
  */
-router.put('/:id',    usersController.update);    // PUT  /api/users/:id 
+router.put('/:id',    projectsController.update);
 
 /**
  * @openapi
- * /api/users/{id}:
+ * /api/projects/{id}:
  *   delete:
  *     tags:
- *       - Usuarios
- *     summary: Elimina un usuario
+ *       - Proyectos
+ *     summary: Elimina un proyecto
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: ID del usuario
+ *         description: ID del proyecto
  *     responses:
  *       204:
- *         description: Usuario eliminado (sin contenido)
+ *         description: Proyecto eliminado (sin contenido)
  *       404:
- *         description: Usuario no encontrado
+ *         description: Proyecto no encontrado
  */
-router.delete('/:id', usersController.remove);    // DELETE /api/users/:id 
-
-export default router;
+router.delete('/:id', projectsController.remove);
+  
+export default router; 
